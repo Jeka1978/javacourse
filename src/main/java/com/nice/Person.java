@@ -3,21 +3,22 @@
 
 package com.nice;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
-
-public class Person {
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
+public class Person implements Serializable {
     private String name;
 
 
-    private int age;
+    private transient int age;
 
 
     public static void main(String[] args) {
