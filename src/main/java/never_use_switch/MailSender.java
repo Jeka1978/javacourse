@@ -6,6 +6,11 @@ import lombok.SneakyThrows;
 import org.reflections.Reflections;
 
 import java.lang.reflect.Modifier;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -34,12 +39,20 @@ public class MailSender {
 
     public void sendMail(MailInfo mailInfo) throws UnsupportedOperationException {
         int mailCode = mailInfo.getMailCode();
-        MailGenerator mailGenerator = map.get(mailCode);
-        if (mailGenerator == null) {
-            throw new UnsupportedOperationException(mailCode + " not supprted yet");
-        }
-        String mailContent = mailGenerator.generateMailContent(mailInfo);
-        send(mailContent);
+
+
+        String html = MailType.findByDbCode(mailCode)
+                .getMailGenerator()
+                .generateMailContent(mailInfo);
+
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime localDateTime = now.withDayOfMonth(1);
+        ZoneId berlin = ZoneId.of("Europe/Berlin");
+        ZonedDateTime.now(ZoneOffset.UTC);
+        ZonedDateTime.of(now, berlin);
+//        ChronoUnit.DAYS.between(now, dayAfterTom);
+        send(html);
+
 
 
     }
