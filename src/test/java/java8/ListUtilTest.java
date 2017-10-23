@@ -15,6 +15,7 @@ public class ListUtilTest {
     public void countDuplicates() throws Exception {
         List<String> list = Arrays.asList("java", "JAVA", "JaVa", "groovy");
 
+list.forEach(System.out::println);
 
         int count = ListUtil.countDuplicates(list, "java", String::equalsIgnoreCase);
 

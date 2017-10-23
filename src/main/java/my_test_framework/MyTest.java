@@ -1,6 +1,9 @@
 package my_test_framework;
 
 
+import com.nice.Person;
+import mySpring.ObjectFactory;
+
 public class MyTest {
 
 
