@@ -11,8 +11,7 @@ public enum MaritalStatus {
     private  String hebrewDesc;
 
 
-    @Override
-    public String toString() {
-        return hebrewDesc;
-    }
+
+
+
 }
