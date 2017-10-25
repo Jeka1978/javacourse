@@ -18,7 +18,7 @@ public class IRobotTest {
             return null;
         }).when(cleaner).clean();
 //        iRobot.setCleaner(cleaner);
-        iRobot.setSpeaker(Mockito.mock(Speaker.class));
+//        iRobot.setSpeaker(Mockito.mock(Speaker.class));
         iRobot.cleanRoom();
     }
 

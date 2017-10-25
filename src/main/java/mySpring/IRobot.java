@@ -6,13 +6,15 @@ import lombok.Setter;
 
 import javax.annotation.PostConstruct;
 
-@Setter(AccessLevel.PACKAGE)
+
+@Setter
 public class IRobot {
     @InjectByFieldType
     private Speaker speaker;
 
     @InjectByFieldType
     private Cleaner cleaner;
+
 
 
     @PostConstruct
