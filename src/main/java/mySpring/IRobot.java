@@ -1,12 +1,16 @@
 package mySpring;
 
 
-public class IRobot {
-    private Speaker speaker = ObjectFactory.getInstance()
-            .createObject(Speaker.class);
+import lombok.AccessLevel;
+import lombok.Setter;
 
-    private Cleaner cleaner = ObjectFactory.getInstance()
-            .createObject(Cleaner.class);
+@Setter(AccessLevel.PACKAGE)
+public class IRobot {
+    @InjectByFieldType
+    private Speaker speaker;
+
+    @InjectByFieldType
+    private Cleaner cleaner;
 
     public void cleanRoom() {
         speaker.speak("I started");

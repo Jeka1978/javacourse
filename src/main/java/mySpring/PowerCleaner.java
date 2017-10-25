@@ -13,6 +13,7 @@ public class PowerCleaner implements Cleaner {
 
     @Override
     public void clean() {
+//        long before = System.nanoTime();
         for (int i = 0; i < repeat; i++) {
             System.out.println("VVVVVVVVVvvvvvvvvvvvv");
         }

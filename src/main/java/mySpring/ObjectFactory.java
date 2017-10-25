@@ -4,7 +4,12 @@ import lombok.SneakyThrows;
 import org.reflections.ReflectionUtils;
 import org.reflections.Reflections;
 
+import javax.annotation.PostConstruct;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
@@ -13,16 +18,48 @@ public class ObjectFactory {
     private Config config = new JavaConfig();
     private Reflections scanner = new Reflections("mySpring");
 
+    private List<ObjectConfigurator> configurators = new ArrayList<>();
+
     public static ObjectFactory getInstance() {
         return ourInstance;
     }
 
+    @SneakyThrows
     private ObjectFactory() {
+        Set<Class<? extends ObjectConfigurator>> classes = scanner.getSubTypesOf(ObjectConfigurator.class);
+        for (Class<? extends ObjectConfigurator> aClass : classes) {
+            configurators.add(aClass.newInstance());
+        }
     }
+
 
 
     @SneakyThrows
     public <T> T createObject(Class<T> type) {
+        type = resolveImpl(type);
+        T t = type.newInstance();
+        configure(t);
+        secondPhaseConstructor(type, t);
+
+        return t;
+    }
+
+    private <T> void secondPhaseConstructor(Class<T> type, T t) throws IllegalAccessException, InvocationTargetException {
+        Method[] methods = type.getDeclaredMethods();
+        for (Method method : methods) {
+            if (method.isAnnotationPresent(PostConstruct.class)) {
+                method.invoke(t);
+            }
+        }
+    }
+
+    private <T> void configure(T t) {
+        for (ObjectConfigurator configurator : configurators) {
+            configurator.configure(t);
+        }
+    }
+
+    private <T> Class<T> resolveImpl(Class<T> type) {
         if (type.isInterface()) {
             Class impl = config.resolveImpl(type);
             if (impl == null) {
@@ -35,26 +72,7 @@ public class ObjectFactory {
             }
             type = impl;
         }
-        T t = type.newInstance();
-
-
-//        ReflectionUtils.getAllFields(type, field -> field.isAnnotationPresent(InjectRandomInt.class));
-
-        //todo move this code to some place
-        Field[] declaredFields = type.getDeclaredFields();
-        for (Field field : declaredFields) {
-            if (field.isAnnotationPresent(InjectRandomInt.class)) {
-                InjectRandomInt annotation = field.getAnnotation(InjectRandomInt.class);
-                int min = annotation.min();
-                int max = annotation.max();
-                Random random = new Random();
-                int value = min + random.nextInt(max - min);
-                field.setAccessible(true);
-                field.set(t,value);
-            }
-        }
-
-        return t;
+        return type;
     }
 }
 
