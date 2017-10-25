@@ -4,6 +4,8 @@ package mySpring;
 import lombok.AccessLevel;
 import lombok.Setter;
 
+import javax.annotation.PostConstruct;
+
 @Setter(AccessLevel.PACKAGE)
 public class IRobot {
     @InjectByFieldType
@@ -11,6 +13,12 @@ public class IRobot {
 
     @InjectByFieldType
     private Cleaner cleaner;
+
+
+    @PostConstruct
+    public void init(){
+        System.out.println(cleaner.getClass());
+    }
 
     public void cleanRoom() {
         speaker.speak("I started");

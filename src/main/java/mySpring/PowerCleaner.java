@@ -2,6 +2,7 @@ package mySpring;
 
 import javax.annotation.PostConstruct;
 
+@Benchmark
 public class PowerCleaner implements Cleaner {
     @InjectRandomInt(min =3, max = 7)
     private int repeat;

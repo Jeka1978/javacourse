@@ -1,6 +1,8 @@
-package mySpring;
+package mySpring.configurators;
 
 import lombok.SneakyThrows;
+import mySpring.InjectRandomInt;
+import mySpring.ObjectConfigurator;
 
 import java.lang.reflect.Field;
 import java.util.Random;

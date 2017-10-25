@@ -1,6 +1,9 @@
-package mySpring;
+package mySpring.configurators;
 
 import lombok.SneakyThrows;
+import mySpring.InjectByFieldType;
+import mySpring.ObjectConfigurator;
+import mySpring.ObjectFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
