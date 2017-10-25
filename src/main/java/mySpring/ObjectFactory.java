@@ -1,14 +1,12 @@
 package mySpring;
 
 import lombok.SneakyThrows;
-import org.reflections.ReflectionUtils;
 import org.reflections.Reflections;
 
 import javax.annotation.PostConstruct;
 import java.lang.reflect.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.Set;
 
 public class ObjectFactory {
@@ -17,6 +15,7 @@ public class ObjectFactory {
     private Reflections scanner = new Reflections("mySpring");
 
     private List<ObjectConfigurator> configurators = new ArrayList<>();
+    private List<ProxyConfigurator> proxyConfigurators = new ArrayList<>();
 
     public static ObjectFactory getInstance() {
         return ourInstance;
@@ -28,6 +27,10 @@ public class ObjectFactory {
         for (Class<? extends ObjectConfigurator> aClass : classes) {
             configurators.add(aClass.newInstance());
         }
+        Set<Class<? extends ProxyConfigurator>> classSet = scanner.getSubTypesOf(ProxyConfigurator.class);
+        for (Class<? extends ProxyConfigurator> aClass : classSet) {
+            proxyConfigurators.add(aClass.newInstance());
+        }
     }
 
 
@@ -38,22 +41,26 @@ public class ObjectFactory {
         T t = type.newInstance();
         configure(t);
         secondPhaseConstructor(type, t);
-
-        if (type.isAnnotationPresent(Benchmark.class)) {
-
-            return (T) Proxy.newProxyInstance(type.getClassLoader(), type.getInterfaces(), (proxy, method, args) -> {
-                System.out.println("*********** BENCHMARK for method "+method.getName()+" **************");
-                long start = System.nanoTime();
-                Object retVal = method.invoke(t, args);
-                long end = System.nanoTime();
-                System.out.println(end-start);
-                System.out.println("*********** END of BENCHMARK for method "+method.getName()+" **************");
-                return retVal;
-            });
+        t = configureProxy(type, t);
+        return t;
+    }
 
 
+
+
+
+
+
+
+
+
+
+
+
+    private <T> T configureProxy(Class<T> type, T t) {
+        for (ProxyConfigurator proxyConfigurator : proxyConfigurators) {
+            t = (T) proxyConfigurator.wrapWithProxy(t, type);
         }
-
         return t;
     }
 

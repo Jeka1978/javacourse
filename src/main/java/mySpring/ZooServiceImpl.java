@@ -3,14 +3,20 @@ package mySpring;
 
 import animals.Dog;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class ZooServiceImpl implements ZooService {
+public class ZooServiceImpl  {
     @InjectRandomInt(min = 3, max = 7)
     private int numberOfDogs;
-    @Override
+
+    @Benchmark
+    public void xxxxx(){
+        System.out.println("ZZZZZZZZZZZZZZZZXXXXXXXXXx");
+    }
+
     public List<Dog> getDogs(){
         ArrayList<Dog> dogs = new ArrayList<>();
         for (int i = 0; i < numberOfDogs; i++) {
@@ -19,7 +25,6 @@ public class ZooServiceImpl implements ZooService {
         return dogs;
     }
 
-    @Override
     @Benchmark
     public void drinkBeer() {
         System.out.println("drinking beer");
