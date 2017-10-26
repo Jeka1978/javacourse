@@ -5,17 +5,22 @@ import mySpring.InjectRandomInt;
 import mySpring.ObjectConfigurator;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
-import org.springframework.lang.Nullable;
+import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Field;
 import java.util.Random;
 
+@Component
 public class InjectRandomIntAnnotationObjectConfigurator implements ObjectConfigurator, BeanPostProcessor {
-    @Nullable
     @Override
     public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
         configure(bean);
         return bean;
+    }
+
+    @Override
+    public Object postProcessAfterInitialization(Object o, String s) throws BeansException {
+        return o;
     }
 
     @Override

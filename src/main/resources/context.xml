@@ -8,36 +8,14 @@
 
     <context:property-placeholder location="classpath:quotes.properties"/>
 
-    <bean class="quoters.BeanDefinitionValidatorBeanFactoryPostProcessor"/>
-    <bean class="mySpring.configurators.InjectRandomIntAnnotationObjectConfigurator"/>
 
 
-    <context:annotation-config/>
-
-    <bean id="s" class="java.lang.String">
-        <constructor-arg value="get daaaaaaaaaaaawn"/>
-    </bean>
-    <bean id="robot" class="quoters.TalkingRobotImpl">
+   <context:component-scan base-package="quoters"/>
+   <context:component-scan base-package="mySpring"/>
 
 
-        <property name="quoters">
-            <list>
-                <ref bean="shakespearQuoter"/>
-                <ref bean="terminatorQuoter"/>
-            </list>
-        </property>
-    </bean>
-    <bean id="shakespearQuoter" class="quoters.ShakespearQuoter">
-        <property name="message" value="${shake}"/>
-    </bean>
 
-    <bean id="terminatorQuoter" destroy-method="killAll" class="quoters.TerminatorQuoter">
-        <property name="messages">
-            <list>
-                <value>I'll be back</value>
-                <ref bean="s"/>
-                <value>Astalavista baby</value>
-            </list>
-        </property>
-    </bean>
+
+
+
 </beans>

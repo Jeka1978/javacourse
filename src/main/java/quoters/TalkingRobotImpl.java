@@ -1,14 +1,18 @@
 package quoters;
 
-import lombok.Setter;
-import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
+@Component
 public class TalkingRobotImpl implements TalkingRobot {
-    @Setter
-    private List<Quoter> quoters;
+    @Autowired(required = false)
+    private List<Quoter> quoters = Arrays.asList((Quoter) () -> System.out.println("This is default quote"));
 
 
     @Override

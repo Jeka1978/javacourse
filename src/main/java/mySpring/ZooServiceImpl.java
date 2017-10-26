@@ -2,13 +2,25 @@ package mySpring;
 
 
 import animals.Dog;
+import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import quoters.TalkingRobot;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 
+
+
 public class ZooServiceImpl  {
+
+
+    public ZooServiceImpl(Integer numberOfDogs) {
+        this.numberOfDogs = numberOfDogs;
+    }
+
     @InjectRandomInt(min = 3, max = 7)
     private int numberOfDogs;
 
