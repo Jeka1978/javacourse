@@ -9,7 +9,6 @@
     <context:property-placeholder location="classpath:quotes.properties"/>
 
 
-
    <context:component-scan base-package="quoters"/>
    <context:component-scan base-package="mySpring"/>
 
