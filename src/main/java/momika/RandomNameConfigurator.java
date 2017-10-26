@@ -1,10 +1,7 @@
 package momika;
 
-import mySpring.InjectByFieldType;
-
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
-import java.lang.reflect.Proxy;
 
 public class RandomNameConfigurator {
     public void configure(Object o) throws NoSuchFieldException, IllegalAccessException, ClassNotFoundException {

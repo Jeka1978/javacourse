@@ -4,13 +4,32 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 
-    <bean id="speaker" class="mySpring.PopupSpeaker"/>
-    <bean id="cleaner" class="mySpring.CleanerImpl"/>
+    <bean class="org.springframework.context.annotation.CommonAnnotationBeanPostProcessor"/>
+
+    <bean id="s" class="java.lang.String">
+        <constructor-arg value="get daaaaaaaaaaaawn"/>
+    </bean>
+    <bean id="robot" class="quoters.TalkingRobotImpl">
 
 
+        <property name="quoters">
+            <list>
+                <ref bean="shakespearQuoter"/>
+                <ref bean="terminatorQuoter"/>
+            </list>
+        </property>
+    </bean>
+    <bean id="shakespearQuoter" class="quoters.ShakespearQuoter">
+        <property name="message" value="2 B || ! 2 B"/>
+    </bean>
 
-    <bean lazy-init="true" id="robot" class="mySpring.IRobot">
-        <property name="speaker" ref="speaker"/>
-        <property name="cleaner" ref="cleaner"/>
+    <bean id="terminatorQuoter" class="quoters.TerminatorQuoter">
+        <property name="messages">
+            <list>
+                <value>I'll be back</value>
+                <ref bean="s"/>
+                <value>Astalavista baby</value>
+            </list>
+        </property>
     </bean>
 </beans>
