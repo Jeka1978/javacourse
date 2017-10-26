@@ -12,9 +12,7 @@ import java.util.List;
 public class TalkingRobotImpl implements TalkingRobot {
 
 
-    @Autowired
-    @Film
-    private Quoter quoter;
+
 
     @Autowired
     private List<Quoter> quoters = Arrays.asList((Quoter) () -> System.out.println("This is default quote"));

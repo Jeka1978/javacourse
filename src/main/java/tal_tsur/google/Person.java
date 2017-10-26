@@ -1,17 +1,16 @@
-package tal_tsur;
+package tal_tsur.google;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.ToString;
+import tal_tsur.Human;
 
 @Data
-public class AmazonPerson extends Human{
+public class Person extends Human {
     private String name;
     private int age;
 
     @Override
     public String toString() {
-        return "AmazonPerson{" +
+        return "Person{" +
                 "name='" + name + '\'' +
                 ", age=" + age +
                 ", salary=" + getSalary() +

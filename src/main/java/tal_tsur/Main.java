@@ -1,12 +1,12 @@
 package tal_tsur;
 
-import org.springframework.beans.BeanUtils;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class Main {
     public static void main(String[] args) {
-        NicePerson nicePerson = new NicePerson("Tal Tsur", 44);
-        AmazonPerson amazonPerson = new AmazonPerson();
-        BeanUtils.copyProperties(nicePerson, amazonPerson);
-        System.out.println("amazonPerson = " + amazonPerson);
+        Person person = new Person("Tal Tsur", 44);
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext("tal_tsur");
+        NiceService niceService = context.getBean(NiceService.class);
+        niceService.savePersonToCloud(person);
     }
 }

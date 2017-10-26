@@ -7,7 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class NicePerson extends Human {
+@NiceEntity("Person")
+public class Person extends Human {
     private String name;
     private int age;
 }
