@@ -17,9 +17,11 @@ import java.util.List;
 public class TerminatorQuoter implements Quoter {
 
     private List<String> messages;
+    @Autowired
+    private Quoter proxy;
 
     @Value("${terminator}")
-    public void setMessages(String messages, @Value("${JAVA_HOME}")String javaHome) {
+    public void setMessages(String messages, @Value("${JAVA_HOME}") String javaHome) {
         System.out.println("javaHome = " + javaHome);
         this.messages = Arrays.asList(messages.split(","));
     }
@@ -32,10 +34,15 @@ public class TerminatorQuoter implements Quoter {
     @Override
     public void sayQuote() {
         messages.forEach(System.out::println);
+        throw new DBRuntimeException("fire all DBA");
+    }
+
+    public void sayANother() {
+        System.out.println("11111111111111111");
     }
 
 
-    public void killAll(){
+    public void killAll() {
         new Thread(() -> {
             System.out.println("You are terminated");
         }).start();
